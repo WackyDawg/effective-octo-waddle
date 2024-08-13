@@ -1,6 +1,17 @@
 {
+  "name": "hello-puppeteer",
+  "version": "0.1.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
   "dependencies": {
-    "eazyminer": "^0.1.9",
-    "express": "^4.19.2"
+    "axios": "latest",
+    "body-parser": "latest",
+    "dotenv": "^16.4.5",
+    "express": "latest",
+    "form-data": "latest",
+    "node-fetch": "latest",
+    "puppeteer": "latest"
   }
 }
