@@ -1,14 +1,15 @@
 const express = require('express');
 const puppeteer = require('puppeteer');
 const path = require('path');
-const fs = require('fs')
+const fs = require('fs');
 
 const app = express();
 const PORT = 4000;
 
 app.get('/', (req, res) => {
-  res.send({ message: "Server running" })
-})
+  res.send({ message: "Server running" });
+});
+
 app.listen(PORT, () => {
   console.log(`Test server is running on http://localhost:${PORT}`);
 });
@@ -21,8 +22,11 @@ function delay(time) {
 }
 
 (async () => {
-  // Launch a new browser instance
-  const browser = await puppeteer.launch({ headless: true });
+  // Launch a new browser instance with the no-sandbox option
+  const browser = await puppeteer.launch({
+    headless: true,
+    args: ['--no-sandbox']  // Add no-sandbox flag here
+  });
 
   // Open a new page
   const page = await browser.newPage();
@@ -33,10 +37,6 @@ function delay(time) {
     timeout: 0
   });
 
-    
-  // console.log(`Screenshot saved and available at http://localhost:${PORT}/screenshot`);
-
   // Close the browser
-  //await browser.close();
-
+  // await browser.close();
 })();
